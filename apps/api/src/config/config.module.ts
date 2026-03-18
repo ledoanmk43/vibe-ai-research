@@ -13,11 +13,13 @@ import * as Joi from 'joi';
         PORT: Joi.number().default(4000),
         API_PREFIX: Joi.string().default('api/v1'),
 
-        DB_HOST: Joi.string().required(),
+        DB_HOST: Joi.string().optional(),
         DB_PORT: Joi.number().default(5432),
-        DB_USERNAME: Joi.string().required(),
-        DB_PASSWORD: Joi.string().required(),
-        DB_NAME: Joi.string().required(),
+        DB_USERNAME: Joi.string().optional(),
+        DB_PASSWORD: Joi.string().optional(),
+        DB_NAME: Joi.string().optional(),
+        DATABASE_URL: Joi.string().optional(),
+        DB_SSL: Joi.boolean().default(false),
         DB_SYNCHRONIZE: Joi.boolean().default(true),
         DB_LOGGING: Joi.boolean().default(false),
 

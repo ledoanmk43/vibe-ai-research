@@ -66,7 +66,7 @@ export interface Order {
   orderNumber: string;
   storeId: string;
   customerId: string;
-  status: 'PENDING' | 'IN_PROGRESS' | 'READY_FOR_PICKUP' | 'COMPLETED' | 'CANCELLED';
+  status: 'PENDING' | 'PROCESSING' | 'READY_FOR_PICKUP' | 'COMPLETED' | 'CANCELLED';
   totalAmount: number;
   discount: number;
   notes?: string;

@@ -12,18 +12,26 @@ import { OrderItem } from '../orders/order-item.entity';
   imports: [
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get<string>('DB_HOST'),
-        port: config.get<number>('DB_PORT'),
-        username: config.get<string>('DB_USERNAME'),
-        password: config.get<string>('DB_PASSWORD'),
-        database: config.get<string>('DB_NAME'),
-        synchronize: config.get<boolean>('DB_SYNCHRONIZE'),
-        logging: config.get<boolean>('DB_LOGGING'),
-        entities: [Store, User, Customer, Service, Order, OrderItem],
-        migrations: [__dirname + '/migrations/*{.ts,.js}'],
-      }),
+      useFactory: (config: ConfigService) => {
+        const url = config.get<string>('DATABASE_URL');
+        const useSsl = config.get<boolean>('DB_SSL');
+
+        return {
+          type: 'postgres',
+          ...(url ? { url } : {
+            host: config.get<string>('DB_HOST'),
+            port: config.get<number>('DB_PORT'),
+            username: config.get<string>('DB_USERNAME'),
+            password: config.get<string>('DB_PASSWORD'),
+            database: config.get<string>('DB_NAME'),
+          }),
+          synchronize: config.get<boolean>('DB_SYNCHRONIZE'),
+          logging: config.get<boolean>('DB_LOGGING'),
+          entities: [Store, User, Customer, Service, Order, OrderItem],
+          migrations: [__dirname + '/migrations/*{.ts,.js}'],
+          ssl: useSsl ? { rejectUnauthorized: false } : false,
+        };
+      },
     }),
   ],
 })
