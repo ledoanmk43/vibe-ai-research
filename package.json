@@ -1,0 +1,16 @@
+{
+  "name": "laundry-crm",
+  "version": "1.0.0",
+  "description": "Laundry Business CRM - Monorepo",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter api run start:dev",
+    "dev:web": "pnpm --filter web run dev",
+    "dev": "concurrently \"pnpm dev:api\" \"pnpm dev:web\"",
+    "build:api": "pnpm --filter api run build",
+    "build:web": "pnpm --filter web run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
